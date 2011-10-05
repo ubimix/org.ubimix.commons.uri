@@ -9,7 +9,6 @@
         <version>1.1.5</version>
     </parent>
     <artifactId>org.webreformatter.commons.uri</artifactId>
-    <version>1.1.5</version>
     <packaging>bundle</packaging>
     <name>${project.artifactId}</name>
 </project>
