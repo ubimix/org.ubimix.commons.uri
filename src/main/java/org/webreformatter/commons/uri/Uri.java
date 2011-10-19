@@ -53,6 +53,8 @@ public class Uri extends AbstractUri {
 
     }
 
+    public final static Uri EMPTY = new Uri("");
+
     private final String fFragment;
 
     private final String fHost;

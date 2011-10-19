@@ -55,6 +55,8 @@ public class Path extends AbstractPath {
 
     }
 
+    public final static Path EMPTY = new Path("");
+
     protected final boolean fPathAbsolute;
 
     protected final List<String> fPathSegments;
