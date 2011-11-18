@@ -436,7 +436,7 @@ public abstract class AbstractUriBuilder<T extends AbstractUriBuilder<T>>
         if (!(fSchemeSegments.equals(uri.getSchemeSegments())
             && AbstractPath.equals(getUserInfo(), uri.getUserInfo())
             && AbstractPath.equals(getHost(), uri.getHost()) && fPort == uri
-            .getPort())) {
+                .getPort())) {
             return cast(uri);
         }
         fSchemeSegments.clear();
@@ -691,12 +691,13 @@ public abstract class AbstractUriBuilder<T extends AbstractUriBuilder<T>>
         return cast();
     }
 
-    public void setFullPath(AbstractPath path) {
+    public T setFullPath(AbstractPath path) {
         fPath.setPath(path);
         checkPath();
+        return cast();
     }
 
-    public void setFullPath(AbstractUri uri) {
+    public T setFullPath(AbstractUri uri) {
         if (uri == null) {
             fPath.setPath("");
             fQueryItems.clear();
@@ -708,6 +709,7 @@ public abstract class AbstractUriBuilder<T extends AbstractUriBuilder<T>>
             setFragment(uri.getFragment(), false);
         }
         checkPath();
+        return cast();
     }
 
     /**
