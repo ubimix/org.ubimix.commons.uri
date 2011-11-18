@@ -127,14 +127,39 @@ public abstract class AbstractPathBuilder<T extends AbstractPathBuilder<?>>
      *         segments from the given path
      */
     public T appendPath(AbstractPath path) {
+        return appendPath(path, false);
+    }
+
+    /**
+     * Appends the given path to the beginning or to the end of this path.
+     * 
+     * @param path the path to append
+     * @param begin if this flag is <code>true</code> then this method prepends
+     *        the given path (puts it at the beginning); otherwise it appends
+     *        the path to the end.
+     * @return the reference to this instance
+     */
+    public T appendPath(AbstractPath path, boolean begin) {
         List<String> pathSegments = path.getPathSegments();
         if (path == null || (pathSegments.isEmpty() && !path.isAbsolutePath())) {
             return cast();
         }
-        fPathSegments.addAll(pathSegments);
-        fPathTrailingSeparator = path.hasPathTrailingSeparator();
-        if (fPathSegments.isEmpty()) {
+        boolean wasEmpty = fPathSegments.isEmpty();
+        if (begin) {
+            boolean wasAbsolute = fPathAbsolute;
+            fPathSegments.addAll(0, pathSegments);
             fPathAbsolute = path.isAbsolutePath();
+            if (wasEmpty) {
+                fPathTrailingSeparator = wasAbsolute;
+            }
+        } else {
+            fPathSegments.addAll(pathSegments);
+            fPathTrailingSeparator = path.hasPathTrailingSeparator();
+            if (wasEmpty) {
+                fPathAbsolute |= path.isAbsolutePath();
+            } else if (fPathSegments.isEmpty()) {
+                fPathAbsolute = path.isAbsolutePath();
+            }
         }
         checkClonePath();
         return cast();
@@ -178,17 +203,24 @@ public abstract class AbstractPathBuilder<T extends AbstractPathBuilder<?>>
             return cast();
         }
         List<String> oldSegments = fPathSegments;
-        boolean oldAbsolute = fPathAbsolute;
+        boolean wasAbsolute = fPathAbsolute;
+        boolean wasEmpty = oldSegments.isEmpty();
+        boolean hadTrailingSeparator = fPathTrailingSeparator;
         fPathSegments = new ArrayList<String>();
         parsePath(segments, this, decode, false);
         if (begin) {
             fPathSegments.addAll(oldSegments);
-        } else {
-            if (!oldSegments.isEmpty()) {
-                fPathSegments.addAll(0, oldSegments);
-                fPathAbsolute = oldAbsolute;
+            if (wasEmpty) {
+                fPathTrailingSeparator |= wasAbsolute || hadTrailingSeparator;
             } else {
-                fPathAbsolute |= oldAbsolute;
+                fPathTrailingSeparator = hadTrailingSeparator;
+            }
+        } else {
+            if (wasEmpty) {
+                fPathAbsolute |= wasAbsolute || hadTrailingSeparator;
+            } else {
+                fPathSegments.addAll(0, oldSegments);
+                fPathAbsolute = wasAbsolute;
             }
         }
         checkClonePath();

@@ -32,6 +32,34 @@ public class PathTest extends TestCase {
         super(name);
     }
 
+    public void testAppendPath() {
+        testAppendPath("", "/a/b/c", true, "/a/b/c");
+        testAppendPath("", "/a/b/c", false, "/a/b/c");
+        testAppendPath("/", "a/b/c", true, "a/b/c/");
+        testAppendPath("/", "a/b/c", false, "/a/b/c");
+        testAppendPath("/x/y", "a/b/c", true, "a/b/c/x/y");
+        testAppendPath("/x/y", "a/b/c", false, "/x/y/a/b/c");
+        testAppendPath("x/y", "a/b/c", true, "a/b/c/x/y");
+        testAppendPath("x/y", "a/b/c", false, "x/y/a/b/c");
+        testAppendPath("x/y/", "a/b/c", true, "a/b/c/x/y/");
+        testAppendPath("x/y/", "a/b/c", false, "x/y/a/b/c");
+    }
+
+    private void testAppendPath(
+        String initialPath,
+        String pathToAppend,
+        boolean begin,
+        String result) {
+        Path.Builder builder = new Path.Builder(initialPath);
+        Path path = new Path(pathToAppend);
+        builder.appendPath(path, begin);
+        assertEquals(result, builder.toString());
+
+        builder = new Path.Builder(initialPath);
+        builder.appendPath(pathToAppend, begin);
+        assertEquals(result, builder.toString());
+    }
+
     public void testEmptyPath() {
         Path.Builder builder = new Path.Builder("/");
         assertEquals("/", builder.toString());
