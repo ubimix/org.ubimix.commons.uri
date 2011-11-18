@@ -32,6 +32,13 @@ public class PathTest extends TestCase {
         super(name);
     }
 
+    public void testEmptyPath() {
+        Path.Builder builder = new Path.Builder("/");
+        assertEquals("/", builder.toString());
+        builder.appendPath("");
+        assertEquals("/", builder.toString());
+    }
+
     public void testEscaped(String escaped, String nonEscaped) {
         testEscaped(escaped, escaped, nonEscaped);
     }

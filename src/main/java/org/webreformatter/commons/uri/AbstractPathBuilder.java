@@ -183,9 +183,13 @@ public abstract class AbstractPathBuilder<T extends AbstractPathBuilder<?>>
         parsePath(segments, this, decode, false);
         if (begin) {
             fPathSegments.addAll(oldSegments);
-        } else if (!oldSegments.isEmpty()) {
-            fPathSegments.addAll(0, oldSegments);
-            fPathAbsolute = oldAbsolute;
+        } else {
+            if (!oldSegments.isEmpty()) {
+                fPathSegments.addAll(0, oldSegments);
+                fPathAbsolute = oldAbsolute;
+            } else {
+                fPathAbsolute |= oldAbsolute;
+            }
         }
         checkClonePath();
         return cast();
