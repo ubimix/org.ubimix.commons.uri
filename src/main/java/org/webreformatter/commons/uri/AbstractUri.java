@@ -507,6 +507,12 @@ public abstract class AbstractUri {
                 }
                 result.append(":");
             }
+        }
+
+        boolean appendSlashes = hasAuthority()
+            || (!schemeSegments.isEmpty() && (!getPath().isEmpty()
+                || !isEmpty(getFragment()) || !getQueryItems().isEmpty()));
+        if (appendSlashes) {
             result.append("//");
         }
 

@@ -360,16 +360,16 @@ public class UriTest extends TestCase {
 
         // Different schemas
         testRelativize("x://www.y.com", "tata:", "tata:");
-        testRelativize("x://www.y.com/", "tata:/a", "tata:/a");
-        testRelativize("x://www.y.com/", "tata:/a/b", "tata:/a/b");
-        testRelativize("x://www.y.com", "tata:/a", "tata:/a");
-        testRelativize("x://www.y.com", "tata:/a/b", "tata:/a/b");
-        testRelativize("x://www.y.com/", "tata:/a", "tata:/a");
-        testRelativize("x://www.y.com/", "tata:/a/b", "tata:/a/b");
+        testRelativize("x://www.y.com/", "tata:/a", "tata:///a");
+        testRelativize("x://www.y.com/", "tata:/a/b", "tata:///a/b");
+        testRelativize("x://www.y.com", "tata:/a", "tata:///a");
+        testRelativize("x://www.y.com", "tata:/a/b", "tata:///a/b");
+        testRelativize("x://www.y.com/", "tata:/a", "tata:///a");
+        testRelativize("x://www.y.com/", "tata:/a/b", "tata:///a/b");
 
-        testRelativize("x://www.y.com/a", "tata:/a/b/", "tata:/a/b/");
-        testRelativize("x://www.y.com/a/", "tata:/a/b/", "tata:/a/b/");
-        testRelativize("x://www.y.com/a/", "tata:/a/b", "tata:/a/b");
+        testRelativize("x://www.y.com/a", "tata:/a/b/", "tata:///a/b/");
+        testRelativize("x://www.y.com/a/", "tata:/a/b/", "tata:///a/b/");
+        testRelativize("x://www.y.com/a/", "tata:/a/b", "tata:///a/b");
 
     }
 
@@ -466,16 +466,16 @@ public class UriTest extends TestCase {
 
         // Different schemas
         testRelativize("toto:", "tata:", "tata:");
-        testRelativize("toto:/", "tata:/a", "tata:/a");
-        testRelativize("toto:/", "tata:/a/b", "tata:/a/b");
-        testRelativize("toto:", "tata:/a", "tata:/a");
-        testRelativize("toto:", "tata:/a/b", "tata:/a/b");
-        testRelativize("toto:/", "tata:/a", "tata:/a");
-        testRelativize("toto:/", "tata:/a/b", "tata:/a/b");
+        testRelativize("toto:/", "tata:/a", "tata:///a");
+        testRelativize("toto:/", "tata:/a/b", "tata:///a/b");
+        testRelativize("toto:", "tata:/a", "tata:///a");
+        testRelativize("toto:", "tata:/a/b", "tata:///a/b");
+        testRelativize("toto:/", "tata:/a", "tata:///a");
+        testRelativize("toto:/", "tata:/a/b", "tata:///a/b");
 
-        testRelativize("toto:/a", "tata:/a/b/", "tata:/a/b/");
-        testRelativize("toto:/a/", "tata:/a/b/", "tata:/a/b/");
-        testRelativize("toto:/a/", "tata:/a/b", "tata:/a/b");
+        testRelativize("toto:/a", "tata:/a/b/", "tata:///a/b/");
+        testRelativize("toto:/a/", "tata:/a/b/", "tata:///a/b/");
+        testRelativize("toto:/a/", "tata:/a/b", "tata:///a/b");
 
     }
 
@@ -592,10 +592,11 @@ public class UriTest extends TestCase {
             "name=ferret",
             "nose");
 
-        assertEquals("urn:example:animal:ferret:nose", new Uri(
+        assertEquals("urn:example:animal:ferret://nose", new Uri(
             "urn:example:animal:ferret:nose").toString());
         testUri(
             "urn:example:animal:ferret:nose",
+            "urn:example:animal:ferret://nose",
             "urn:example:animal:ferret",
             null,
             "nose",
@@ -643,6 +644,7 @@ public class UriTest extends TestCase {
             null);
         testUri(
             "mailto:mduerst@ifi.unizh.ch",
+            "mailto://mduerst@ifi.unizh.ch",
             "mailto",
             null,
             "mduerst@ifi.unizh.ch",
@@ -650,6 +652,7 @@ public class UriTest extends TestCase {
             null);
         testUri(
             "news:comp.infosystems.www.servers.unix",
+            "news://comp.infosystems.www.servers.unix",
             "news",
             null,
             "comp.infosystems.www.servers.unix",
@@ -663,12 +666,12 @@ public class UriTest extends TestCase {
             null,
             null);
 
-        testUri(":zz", null, null, "zz", null, null);
-        testUri("xx:yy:zz", "xx:yy", null, "zz", null, null);
-        testUri("xx:::yy:zz", "xx:::yy", null, "zz", null, null);
+        testUri(":zz", "://zz", null, null, "zz", null, null);
+        testUri("xx:yy:zz", "xx:yy://zz", "xx:yy", null, "zz", null, null);
+        testUri("xx:::yy:zz", "xx:::yy://zz", "xx:::yy", null, "zz", null, null);
         testUri("//host/path", null, "host", "/path", null, null);
-        testUri("toto:/titi", "toto", null, "/titi", null, null);
-        testUri("toto:titi", "toto", null, "titi", null, null);
+        testUri("toto:/titi", "toto:///titi", "toto", null, "/titi", null, null);
+        testUri("toto:titi", "toto://titi", "toto", null, "titi", null, null);
         testUri("toto/titi/tata", null, null, "toto/titi/tata", null, null);
         testUri("/toto/titi/tata", null, null, "/toto/titi/tata", null, null);
         testUri("toto", null, null, "toto", null, null);
@@ -676,8 +679,15 @@ public class UriTest extends TestCase {
         testUri("./.././../toto", null, null, "./.././../toto", null, null);
         testUri(".", null, null, ".", null, null);
         testUri("..\\..\\toto", null, null, "../../toto", null, null);
-        testUri("rdf:type", "rdf", null, "type", null, null);
-        testUri("//host:123/a/b/c", null, "host:123", "/a/b/c", null, null);
+        testUri("rdf:type", "rdf://type", "rdf", null, "type", null, null);
+        testUri(
+            "//host:123/a/b/c",
+            "//host:123/a/b/c",
+            null,
+            "host:123",
+            "/a/b/c",
+            null,
+            null);
 
         testUri(
             "//login:password@:123/a/b/c",
@@ -688,13 +698,13 @@ public class UriTest extends TestCase {
             null);
 
         Uri uri = new Uri("news:toto");
-        assertEquals("news:toto", uri.getUri());
+        assertEquals("news://toto", uri.getUri());
 
         // Formally "invalid" uris
         testUri("123://host/a/b/c", "123", "host", "/a/b/c", null, null);
 
         uri = new Uri("news:toto:titi:tata/x/y/z");
-        assertEquals("news:toto:titi:tata/x/y/z", uri.getUri());
+        assertEquals("news:toto:titi://tata/x/y/z", uri.getUri());
         assertEquals("news:toto:titi", uri.getScheme());
         Path path = uri.getPath();
         assertEquals("tata/x/y/z", path.getPath(true));
@@ -705,7 +715,7 @@ public class UriTest extends TestCase {
         assertEquals("z", path.getPathSegment(3));
 
         uri = new Uri("news:toto:titi:tata/x/y/z");
-        assertEquals("news:toto:titi:tata/x/y/z", uri.getUri());
+        assertEquals("news:toto:titi://tata/x/y/z", uri.getUri());
         assertEquals("news:toto:titi", uri.getScheme());
         assertEquals(3, uri.getSchemeSegmentCount());
         assertEquals("news", uri.getSchemeSegment(0));
@@ -713,14 +723,14 @@ public class UriTest extends TestCase {
         assertEquals("titi", uri.getSchemeSegment(2));
 
         uri = uri.getBuilder().setScheme("A:B").build();
-        assertEquals("A:B:tata/x/y/z", uri.getUri());
+        assertEquals("A:B://tata/x/y/z", uri.getUri());
         assertEquals("A:B", uri.getScheme());
         assertEquals(2, uri.getSchemeSegmentCount());
         assertEquals("A", uri.getSchemeSegment(0));
         assertEquals("B", uri.getSchemeSegment(1));
 
         uri = uri.getBuilder().appendSchemeSegments("1:2", true).build();
-        assertEquals("1:2:A:B:tata/x/y/z", uri.getUri());
+        assertEquals("1:2:A:B://tata/x/y/z", uri.getUri());
         assertEquals("1:2:A:B", uri.getScheme());
         assertEquals(4, uri.getSchemeSegmentCount());
         assertEquals("1", uri.getSchemeSegment(0));
@@ -729,7 +739,7 @@ public class UriTest extends TestCase {
         assertEquals("B", uri.getSchemeSegment(3));
 
         uri = uri.getBuilder().appendSchemeSegments("3:4", false).build();
-        assertEquals("1:2:A:B:3:4:tata/x/y/z", uri.getUri());
+        assertEquals("1:2:A:B:3:4://tata/x/y/z", uri.getUri());
         assertEquals("1:2:A:B:3:4", uri.getScheme());
         assertEquals(6, uri.getSchemeSegmentCount());
         assertEquals("1", uri.getSchemeSegment(0));
@@ -740,7 +750,7 @@ public class UriTest extends TestCase {
         assertEquals("4", uri.getSchemeSegment(5));
 
         uri = uri.getBuilder().removeFirstSchemeSegments(2).build();
-        assertEquals("A:B:3:4:tata/x/y/z", uri.getUri());
+        assertEquals("A:B:3:4://tata/x/y/z", uri.getUri());
         assertEquals("A:B:3:4", uri.getScheme());
         assertEquals(4, uri.getSchemeSegmentCount());
         assertEquals("A", uri.getSchemeSegment(0));
@@ -749,7 +759,7 @@ public class UriTest extends TestCase {
         assertEquals("4", uri.getSchemeSegment(3));
 
         uri = uri.getBuilder().removeLastSchemeSegments(2).build();
-        assertEquals("A:B:tata/x/y/z", uri.getUri());
+        assertEquals("A:B://tata/x/y/z", uri.getUri());
         assertEquals("A:B", uri.getScheme());
         assertEquals(2, uri.getSchemeSegmentCount());
         assertEquals("A", uri.getSchemeSegment(0));
@@ -803,9 +813,10 @@ public class UriTest extends TestCase {
     }
 
     public void testUri() {
-        testUri("a:b", "a", null, "b", null, null);
+        testUri("a:b", "a://b", "a", null, "b", null, null);
         testUri(
             "toto:x:y:z/a/b/c?x=y&a=b#fragment",
+            "toto:x:y://z/a/b/c?x=y&a=b#fragment",
             "toto:x:y",
             null,
             "z/a/b/c",
@@ -989,7 +1000,7 @@ public class UriTest extends TestCase {
             uri.getUri());
 
         uri = u.getBuilder().setAuthority(null).build();
-        assertEquals("http:/a/b/c?x=y&a=b#fragment", uri.getUri());
+        assertEquals("http:///a/b/c?x=y&a=b#fragment", uri.getUri());
 
         uri = u.getBuilder().setAuthority("a:b@www.google.com:80").build();
         assertEquals(
@@ -1080,11 +1091,11 @@ public class UriTest extends TestCase {
      */
     public void testUriModificationsWithoutAuthorities() {
         Uri.Builder uri = new Uri.Builder("toto:x:y:z/a/b/c?x=y&a=b#fragment");
-        assertEquals("toto:x:y:z/a/b/c?x=y&a=b#fragment", uri.getUri());
+        assertEquals("toto:x:y://z/a/b/c?x=y&a=b#fragment", uri.getUri());
 
         // User info
         uri.setUserInfo(null);
-        assertEquals("toto:x:y:z/a/b/c?x=y&a=b#fragment", uri.getUri());
+        assertEquals("toto:x:y://z/a/b/c?x=y&a=b#fragment", uri.getUri());
         uri.setUserInfo("user1:pwd1");
         assertEquals(
             "toto:x:y://user1:pwd1@/z/a/b/c?x=y&a=b#fragment",
@@ -1125,7 +1136,7 @@ public class UriTest extends TestCase {
             uri.getUri());
 
         uri.setAuthority(null);
-        assertEquals("toto:x:y:/z/a/b/c?x=y&a=b#fragment", uri.getUri());
+        assertEquals("toto:x:y:///z/a/b/c?x=y&a=b#fragment", uri.getUri());
 
         uri.setAuthority("a:b@www.google.com:80");
         assertEquals(
@@ -1163,21 +1174,21 @@ public class UriTest extends TestCase {
         // Full path
         uri.setAuthority(null);
         path.setFullPath("x/y");
-        assertEquals("toto:x:y:x/y", uri.getUri());
+        assertEquals("toto:x:y://x/y", uri.getUri());
 
         path.setFullPath("x/y/?a=b&c=d");
-        assertEquals("toto:x:y:x/y/", uri.getUri());
+        assertEquals("toto:x:y://x/y/", uri.getUri());
         assertEquals("x/y/", path.getPath(true));
         assertNull(uri.getQuery());
 
         uri.setFullPath("x/y/?a=b&c=d#Frag1");
-        assertEquals("toto:x:y:x/y/?a=b&c=d#Frag1", uri.getUri());
+        assertEquals("toto:x:y://x/y/?a=b&c=d#Frag1", uri.getUri());
         assertEquals("x/y/", path.getPath(true));
         assertEquals("a=b&c=d", uri.getQuery());
         assertEquals("Frag1", uri.getFragment());
 
         uri.setFullPath("#Frag1");
-        assertEquals("toto:x:y:#Frag1", uri.getUri());
+        assertEquals("toto:x:y://#Frag1", uri.getUri());
         assertNull(path.getPath(true));
         assertNull(uri.getQuery());
         assertEquals("Frag1", uri.getFragment());
