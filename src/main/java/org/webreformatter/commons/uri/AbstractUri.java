@@ -507,10 +507,10 @@ public abstract class AbstractUri {
                 }
                 result.append(":");
             }
+            result.append("//");
         }
 
         if (hasAuthority()) {
-            result.append("//");
             appendAuthority(this, result);
         }
         appendFullPath(this, result, escape, encode);

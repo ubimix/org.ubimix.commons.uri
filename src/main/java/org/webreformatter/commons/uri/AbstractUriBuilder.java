@@ -238,7 +238,7 @@ public abstract class AbstractUriBuilder<T extends AbstractUriBuilder<T>>
      * @return a copy of this path with appended path segments.
      */
     public T appendFullPath(String path) {
-        fPath.appendPath(path, AbstractPath.DECODE_PATH);
+        fPath.appendPath(path, false, AbstractPath.DECODE_PATH);
         checkPath();
         return cast();
     }
