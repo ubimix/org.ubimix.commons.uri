@@ -202,6 +202,20 @@ public class UriTest extends TestCase {
         assertEquals(control, map);
     }
 
+    public void testRelativeUri() {
+        testRelativeUri("./abc", null, "./abc");
+        testRelativeUri("file://./abc", null, "./abc");
+        testRelativeUri("file://.././abc", null, ".././abc");
+    }
+
+    public void testRelativeUri(String str, String host, String path) {
+        Uri uri = new Uri(str);
+        assertEquals(str, uri.toString());
+        assertEquals(host, uri.getHost());
+        Path p = new Path(path);
+        assertEquals(p, uri.getPath());
+    }
+
     protected void testRelativize(String first, String second, String control) {
         Uri a = new Uri(first);
         Uri b = new Uri(second);

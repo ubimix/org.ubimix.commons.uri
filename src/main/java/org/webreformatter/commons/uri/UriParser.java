@@ -516,6 +516,9 @@ public class UriParser {
         boolean validPort = false;
         loop: while (pos < array.length) {
             char ch = array[pos];
+            if (pos == hostStart && ch == '.') {
+                break;
+            }
             switch (ch) {
                 case '/':
                 case '?':
