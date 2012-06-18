@@ -318,11 +318,7 @@ public abstract class AbstractUriBuilder<T extends AbstractUriBuilder<T>>
         return (T) this;
     }
 
-    @SuppressWarnings("unchecked")
     protected T cast(AbstractUri uri) {
-        if (getClass().isInstance(uri)) {
-            return (T) uri;
-        }
         return newCopy(uri);
     }
 

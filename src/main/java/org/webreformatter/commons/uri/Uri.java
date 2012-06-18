@@ -40,6 +40,14 @@ public class Uri extends AbstractUri {
         }
 
         @Override
+        protected Builder cast(AbstractUri uri) {
+            if (uri instanceof Builder) {
+                return (Builder) uri;
+            }
+            return super.cast(uri);
+        }
+
+        @Override
         protected Builder newCopy(AbstractUri uri) {
             return new Builder(uri);
         }
