@@ -429,6 +429,9 @@ public abstract class AbstractUriBuilder<T extends AbstractUriBuilder<T>>
     }
 
     public T getRelative(AbstractUri uri) {
+        if (uri == null) {
+            return null;
+        }
         if (!(fSchemeSegments.equals(uri.getSchemeSegments())
             && AbstractPath.equals(getUserInfo(), uri.getUserInfo())
             && AbstractPath.equals(getHost(), uri.getHost()) && fPort == uri
