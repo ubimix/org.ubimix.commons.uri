@@ -14,16 +14,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * ************************************************************************** */
-package org.webreformatter.commons.uri;
+package org.ubimix.commons.uri;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.webreformatter.commons.uri.path.PathManagerTest;
+import org.ubimix.commons.uri.path.PathManagerTest;
 
 
 /**
- * Test suite for all classes in the "org.webreformatter.commons.uri" package.
+ * Test suite for all classes in the "org.ubimix.commons.uri" package.
  * 
  * @author kotelnikov
  */
@@ -31,11 +31,11 @@ public class AllTests {
 
     /**
      * @return a test suite for all classes in the
-     *         "org.webreformatter.commons.uri" package.
+     *         "org.ubimix.commons.uri" package.
      */
     public static Test suite() {
         TestSuite suite = new TestSuite(
-            "Test for org.webreformatter.commons.uri");
+            "Test for org.ubimix.commons.uri");
         // $JUnit-BEGIN$
         suite.addTestSuite(PathTest.class);
         suite.addTestSuite(UriTest.class);

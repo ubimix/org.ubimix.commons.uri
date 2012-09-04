@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.webreformatter.commons.uri;
+package org.ubimix.commons.uri;
 
 import junit.framework.TestCase;
 

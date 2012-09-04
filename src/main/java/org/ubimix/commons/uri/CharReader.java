@@ -1,4 +1,4 @@
-package org.webreformatter.commons.uri;
+package org.ubimix.commons.uri;
 
 public class CharReader {
 

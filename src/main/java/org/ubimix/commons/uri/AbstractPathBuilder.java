@@ -1,4 +1,4 @@
-package org.webreformatter.commons.uri;
+package org.ubimix.commons.uri;
 
 import java.util.ArrayList;
 import java.util.List;

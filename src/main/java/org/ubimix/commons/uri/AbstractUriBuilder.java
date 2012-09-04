@@ -1,13 +1,13 @@
-package org.webreformatter.commons.uri;
+package org.ubimix.commons.uri;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.webreformatter.commons.uri.AbstractPathBuilder.PathParseListener;
-import org.webreformatter.commons.uri.Path.Builder;
-import org.webreformatter.commons.uri.UriParser.CompositeUriListener;
-import org.webreformatter.commons.uri.UriParser.IUriListener;
+import org.ubimix.commons.uri.AbstractPathBuilder.PathParseListener;
+import org.ubimix.commons.uri.Path.Builder;
+import org.ubimix.commons.uri.UriParser.CompositeUriListener;
+import org.ubimix.commons.uri.UriParser.IUriListener;
 
 /**
  * @author kotelnikov

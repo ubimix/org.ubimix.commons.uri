@@ -14,7 +14,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  * ************************************************************************** */
-package org.webreformatter.commons.uri;
+package org.ubimix.commons.uri;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -23,8 +23,8 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-import org.webreformatter.commons.uri.AbstractUri.QueryItem;
-import org.webreformatter.commons.uri.Path.Builder;
+import org.ubimix.commons.uri.AbstractUri.QueryItem;
+import org.ubimix.commons.uri.Path.Builder;
 
 /**
  * @author kotelnikov

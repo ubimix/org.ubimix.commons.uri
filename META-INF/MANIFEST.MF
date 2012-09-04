@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
-Bundle-SymbolicName: org.webreformatter.commons.uri
-Bundle-Name: org.webreformatter.commons.uri
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-Version: 1.1.5
-Export-Package: org.webreformatter.commons.uri;version="1.1.5",
- org.webreformatter.commons.uri.path;version="1.1.5"
+Bundle-SymbolicName: org.ubimix.commons.uri
+Bundle-Name: org.ubimix.commons.uri
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Version: 1.2.1
+Export-Package: org.ubimix.commons.uri;version="1.2.1",
+ org.ubimix.commons.uri.path;version="1.2.1"
 Bundle-ManifestVersion: 2
 Bundle-License: http://www.apache.org/licenses/LICENSE-2.0
 Include-Resources: .
