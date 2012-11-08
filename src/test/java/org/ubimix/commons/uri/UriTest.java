@@ -179,7 +179,7 @@ public class UriTest extends TestCase {
 
         uri = new Uri.Builder("?x=y");
         uri = uri.addParams("z");
-        testQuery(uri.toString(), "x=y&z=", "x", "y", "z", "");
+        testQuery(uri.toString(), "x=y&z", "x", "y", "z", null);
     }
 
     private void testQuery(String str, String query, String... params) {

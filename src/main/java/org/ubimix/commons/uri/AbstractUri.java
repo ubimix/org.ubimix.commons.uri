@@ -88,9 +88,10 @@ public abstract class AbstractUri {
         public QueryItem(String name, String value, boolean decode) {
             this.name = decode ? AbstractPath
                 .decode(!isEmpty(name) ? name : "") : name;
-            this.value = decode ? AbstractPath.decode(!isEmpty(value)
-                ? value
-                : "") : value;
+            if (value != null && decode) {
+                value = AbstractPath.decode(value);
+            }
+            this.value = value;
         }
 
         public void appendPair(
@@ -100,8 +101,10 @@ public abstract class AbstractUri {
             String key = getName(escape, encode);
             String value = getValue(escape, encode);
             builder.append(key);
-            builder.append("=");
-            builder.append(value);
+            if (value != null) {
+                builder.append("=");
+                builder.append(value);
+            }
         }
 
         /**
@@ -116,7 +119,13 @@ public abstract class AbstractUri {
                 return false;
             }
             AbstractUri.QueryItem o = (AbstractUri.QueryItem) obj;
-            return name.equals(o.name) && value.equals(o.value);
+            return equals(name, o.name) && equals(value, o.value);
+        }
+
+        private boolean equals(String first, String second) {
+            return first != null && second != null
+                ? first.equals(second)
+                : first == second;
         }
 
         public String getName(boolean escape, boolean encode) {
@@ -130,7 +139,9 @@ public abstract class AbstractUri {
             if (!escape && !encode) {
                 return value;
             }
-            return AbstractPath.encode(value, escape, encode);
+            return value != null
+                ? AbstractPath.encode(value, escape, encode)
+                : null;
         }
 
         /**

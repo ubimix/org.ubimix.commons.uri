@@ -739,7 +739,7 @@ public abstract class AbstractUriBuilder<T extends AbstractUriBuilder<T>>
             if ("".equals(name)) {
                 continue;
             }
-            String value = pair.length > 1 ? pair[1] : "";
+            String value = pair.length > 1 ? pair[1] : null;
             QueryItem item = new QueryItem(name, value);
             fQueryItems.add(item);
         }
